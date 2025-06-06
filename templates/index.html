@@ -33,12 +33,14 @@
       <th>Thời gian</th>
       <th>Mực nước (cm)</th>
       <th>Độ mặn (ppm)</th>
+      <th>Tình trạng lúa</th>
     </tr>
     {% for item in data %}
     <tr>
       <td>{{ item.timestamp }}</td>
       <td>{{ item.water_level_cm }}</td>
       <td>{{ item.tds_ppm }} {{item.water_tds}}</td>
+      <td>{{item.result}}</td>
     </tr>
     {% endfor %}
   </table>
