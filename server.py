@@ -3,7 +3,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# Lưu dữ liệu vào bộ nhớ tạm (RAM), bạn có thể thay bằng database
+# Lưu dữ liệu vào bộ nhớ tạm (RAM), có thể thay bằng database
 data_log = []
 
 @app.route('/')
