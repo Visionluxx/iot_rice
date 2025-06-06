@@ -4,7 +4,7 @@ from datetime import datetime
 import gdown
 # Download mô hình từ GG Drive
 file_id = "1pVR2WDUMkXUE1E4fD6-pe4VSMcvsxAJI"
-url = f"https://drive.google.com/uc?id={file_id}"
+url = f`https://drive.google.com/uc?id={file_id}`
 # Tên file lưu về local
 output = "diseases_detection.keras"
 gdown.download(url, output, quiet=False)
