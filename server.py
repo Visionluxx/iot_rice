@@ -1,6 +1,17 @@
 from flask import Flask, request, jsonify, render_template
 from datetime import datetime
 
+import gdown
+# Download mô hình từ GG Drive
+file_id = "1pVR2WDUMkXUE1E4fD6-pe4VSMcvsxAJI"
+url = f"https://drive.google.com/uc?id={file_id}"
+# Tên file lưu về local
+output = "diseases_detection.keras"
+gdown.download(url, output, quiet=False)
+# Load từ loacal
+from tensorflow.keras.models import load_model
+model = load_model(output)
+
 app = Flask(__name__)
 
 # Lưu dữ liệu vào bộ nhớ tạm (RAM), có thể thay bằng database
@@ -34,6 +45,34 @@ def receive_data():
     except Exception as e:
         print("Error:", e)
         return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route('/api/image', methods=['POST'])
+def receive_image():
+    try:
+        content = request.get_json()
+        image_base64 = content.get("image")
+        
+        # Giải mã và lưu file ảnh
+        import base64
+        with open("image.jpg", "wb") as f:
+            f.write(base64.b64decode(image_base64))
+        from PIL import Image
+        import numpy as np
+        from tensorflow.keras.models import load_model
+        img=Image.open("image.jpg").resize((224, 224))
+        img_array=np.expand_dims(np.array(img)/255.0, axis=0)
+        pred=model.predict(img_array)
+        class_idx=int(np.argmax(pred[0]))
+        result=""
+        if class_idx==3:
+            result="Lúa khỏe mạnh"
+        else:
+            result="Lúa đã bị bệnh, hãy hành động"
+        data_log.append(result)
+        return jsonify({"status": "received"}), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
