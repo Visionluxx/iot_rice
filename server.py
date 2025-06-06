@@ -14,10 +14,19 @@ def index():
 def receive_data():
     try:
         content = request.json
+        tds=content.get("tds_ppm")
+        warning=""
+        if tds<=300:
+            warning="nguồn nước có độ mặn thích hợp"
+        else if 300<tds and tds<500:
+            warning="nguồn nước hơi mặn, hạn chế tưới tiêu"
+        else if tds>500:
+            warning = "nguồn nước quá mặn, không thể tưới tiêu"
         record = {
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "water_level_cm": content.get("water_level_cm"),
             "tds_ppm": content.get("tds_ppm")
+            "water_tds"=warning
         }
         data_log.append(record)
         print("Received:", record)
