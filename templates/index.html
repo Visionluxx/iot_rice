@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dữ liệu cảm biến IoT</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    h2 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h2>Bảng dữ liệu mực nước và TDS (ppm)</h2>
+  <table>
+    <tr>
+      <th>Thời gian</th>
+      <th>Mực nước (cm)</th>
+      <th>Độ mặn (ppm)</th>
+    </tr>
+    {% for item in data %}
+    <tr>
+      <td>{{ item.timestamp }}</td>
+      <td>{{ item.water_level_cm }}</td>
+      <td>{{ item.tds_ppm }} {{item.</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
 
