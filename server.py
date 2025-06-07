@@ -12,7 +12,7 @@ gdown.download(url, output, quiet=False)
 from tensorflow.keras.models import load_model
 model = load_model(output)
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 
 # Lưu dữ liệu vào bộ nhớ tạm (RAM), có thể thay bằng database
 data_log = []
